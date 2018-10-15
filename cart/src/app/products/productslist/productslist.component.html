@@ -1,0 +1,24 @@
+<div class="container">
+
+  <br>  <p class="text-center">Our top products</p>
+  <hr>
+  <div class="row">
+    <div class="col-md-4" *ngFor="let product of productList">
+      <figure class="card card-product">
+        <div class="img-wrap"><img src="{{product.ProductPicUrl}}"></div>
+        <figcaption class="info-wrap">
+            <h4 class="title">{{product.Name}}</h4>
+            <p class="desc">{{product.Description | slice:0:50}}</p>
+        </figcaption>
+        <div class="bottom-wrap">
+          {{product.ProductId}}
+          <button (click)="addProductToCart(product)" class="btn btn-sm btn-primary float-right">Order Now</button>	
+          <div class="price-wrap h5">
+            <span class="price-new">₹{{product.Price}}</span>
+          </div> <!-- price-wrap.// -->
+        </div> <!-- bottom-wrap.// -->
+      </figure>
+    </div> <!-- col // -->
+  </div> <!-- row.// -->
+  </div> 
+  <!--container.//-->
