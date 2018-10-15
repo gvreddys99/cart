@@ -1,6 +1,7 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, Output } from '@angular/core';
 
 import { ProductService } from "./../../shared/services/Product.service";
+import { EventEmitter } from 'events';
 
 @Injectable()
 @Component({
@@ -11,7 +12,8 @@ import { ProductService } from "./../../shared/services/Product.service";
 export class ProductslistComponent implements OnInit {
   private products:any;
   private productList:any;
-  private cartCount;
+  private cartCount:number;
+
   constructor(private productservice:ProductService) { }
 
   ngOnInit() {
@@ -21,10 +23,6 @@ export class ProductslistComponent implements OnInit {
     })
   }
   addProductToCart(product){
-    console.log(product);
     this.productservice.addToCart(product)
-    this.cartCount = this.productservice.calculateLocalCartProdCounts();
-    console.log(this.cartCount);
   }
-
 }

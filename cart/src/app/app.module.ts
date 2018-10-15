@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injectable } from '@angular/core';
 import { HttpClientModule} from "@angular/common/http"
+import { Route, RouterModule } from "@angular/router";
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -13,6 +14,13 @@ import { LoaderSpinnerComponent } from './shared/loader-spinner/loader-spinner.c
 
 
 import { ProductService } from './shared/services/product.service';
+
+const route: Route[] = [
+{path:'index.html', component:ProductslistComponent},
+{path:'product/:id',component:ProductdetailsComponent},
+{path:'cart',component:CartComponent},
+{path:'**',component:ProductslistComponent}
+]
 
 @NgModule({
   declarations: [
@@ -27,7 +35,8 @@ import { ProductService } from './shared/services/product.service';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(route)
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
