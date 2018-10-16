@@ -4,4 +4,6 @@ export class Product {
     Price: number;
     Description: string;
     ProductPicUrl: string;
+    Quantity:number;
+    SubTotal:number;
 }

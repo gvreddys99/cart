@@ -2,7 +2,6 @@ import { Component, OnInit, Injectable, Output } from '@angular/core';
 
 import { ProductService } from "./../../shared/services/Product.service";
 
-import { mapChildrenIntoArray } from '@angular/router/src/url_tree';
 
 @Injectable()
 @Component({
@@ -16,13 +15,17 @@ export class ProductslistComponent implements OnInit {
   private cartCount:number;
   private cartProducts;
   private currentProductQuantity = 0;
+  private scrollProducts;
 
-  constructor(private productservice:ProductService) {}
+  constructor(private productservice:ProductService) { 
+
+  }
 
   ngOnInit() {
     this.products = this.productservice.getProducts();
     this.products.subscribe( products => {
       this.productList = products;
+      this.scrollProducts = this.productList.slice(0,3);
     })
   }
   addProductToCart(product){
@@ -35,4 +38,22 @@ export class ProductslistComponent implements OnInit {
     this.currentProductQuantity++
     this.productservice.updateCart(product,this.currentProductQuantity)
   }
+  
+
+  //infinite scroll
+
+  onScroll(){
+    console.log('scrolling down')
+    if(this.scrollProducts.length < this.productList.length){  
+      let len = this.scrollProducts.length;
+
+      for(let i = len; i <= len+3; i++){
+      this.scrollProducts.push(this.productList[i]);
+      }
+    }
+  }
+  onScrollUp(){
+    console.log('scrolling up')
+  }
+ 
 }

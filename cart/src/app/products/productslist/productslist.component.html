@@ -2,8 +2,12 @@
 
   <br>  <p class="text-center">Our top products</p>
   <hr>
-  <div class="row">
-    <div class="col-md-4" *ngFor="let product of productList">
+  <div class="row products-container"  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()"
+  (scrollup)="onScrollUp()">
+    <div class="col-md-4" *ngFor="let product of scrollProducts">
       <figure class="card card-product">
         <div class="img-wrap"><img src="{{product.ProductPicUrl}}"></div>
         <figcaption class="info-wrap">

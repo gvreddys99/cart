@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injectable } from '@angular/core';
 import { HttpClientModule} from "@angular/common/http"
 import { Route, RouterModule } from "@angular/router";
+import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -36,7 +37,8 @@ const route: Route[] = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(route)
+    RouterModule.forRoot(route),
+    InfiniteScrollModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

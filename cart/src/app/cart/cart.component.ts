@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TargetLocator } from 'selenium-webdriver';
-import { TargetLocator } from 'selenium-webdriver';
-
 
 import { ProductService } from "./../shared/services/Product.service";
 
@@ -17,6 +14,10 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     this.cartProducts = this.productService.getCartProducts();
+    this.productService.getbasketGrandTotal().subscribe(total => {
+      console.log(total)
+      this.grandTotal = total;
+    })
   }
   removeItemFromCart(product){
     this.productService.removeCartProduct(product);
