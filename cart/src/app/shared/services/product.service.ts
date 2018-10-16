@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { HttpClient} from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient} from '@angular/common/http';
 import { BehaviorSubject, Observable  } from 'rxjs';
 import { Product } from './../models/product';
 
@@ -9,44 +9,46 @@ import { Product } from './../models/product';
 
 export class ProductService {
 
-  public selectedProduct : BehaviorSubject<any> = new BehaviorSubject(this.getCartProducts().length);
-  public grandTotal : BehaviorSubject<any> = new BehaviorSubject(this.getCartGrandTotal());
-  Products : Product[]= [];
-  private SingleProduct:any;
+  public selectedProduct: BehaviorSubject<any> = new BehaviorSubject(this.getCartProducts().length);
+  public grandTotal: BehaviorSubject<any> = new BehaviorSubject(this.getCartGrandTotal());
+  Products: Product[];
+  private SingleProduct: any;
 
-  constructor(private http:HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   getProducts() {
-    return this.http.get("./../../assets/products.json");
+    return this.http.get('./../../assets/products.json');
   }
 
-  updateCart(data: Product,quantity) {
+  updateCart(data: Product, quantity) {
     let a: Product[];
-    a = JSON.parse(localStorage.getItem("avct_item")) || [];
-    let flag:boolean = false;
-    a.map((item,index) => {
-      if(item.ProductId == data.ProductId){
+    a = JSON.parse(localStorage.getItem('avct_item')) || [];
+    let flag = false;
+    a.map((item, index) => {
+      if (item.ProductId === data.ProductId) {
         item.Quantity = quantity;
         item.SubTotal = data.Price * quantity;
-        a.splice(index,1,item);
-        flag=true;
+        a.splice(index, 1, item);
+        flag = true;
       }
-    })
-    if(!flag){
+    });
+
+    if (!flag) {
       data.SubTotal = data.Price * data.Quantity;
       a.push(data);
     }
+
     setTimeout(() => {
-      localStorage.setItem("avct_item", JSON.stringify(a));
+      localStorage.setItem('avct_item', JSON.stringify(a));
       this.calculateLocalCartProdCounts();
-      this.calculateBasketGrandTotal()
+      this.calculateBasketGrandTotal();
     }, 200);
   }
 
   // Removing product from cart
   removeCartProduct(product: Product) {
-    const products: Product[] = JSON.parse(localStorage.getItem("avct_item"));
+    const products: Product[] = JSON.parse(localStorage.getItem('avct_item'));
 
     for (let i = 0; i < products.length; i++) {
       if (products[i].ProductId === product.ProductId) {
@@ -55,30 +57,30 @@ export class ProductService {
       }
     }
     // ReAdding the products after remove
-    localStorage.setItem("avct_item", JSON.stringify(products));
+    localStorage.setItem('avct_item', JSON.stringify(products));
     this.calculateLocalCartProdCounts();
-    this.calculateBasketGrandTotal()
+    this.calculateBasketGrandTotal();
   }
 
   // Fetching Local CartsProducts
   getCartProducts(): Product[] {
     const products: Product[] =
-    JSON.parse(localStorage.getItem("avct_item")) || [];
+    JSON.parse(localStorage.getItem('avct_item')) || [];
     return products;
   }
 
-  getCartGrandTotal(){
+  getCartGrandTotal() {
     let grandTotal = 0;
-    let products = this.getCartProducts();
+    const products = this.getCartProducts();
     products.map((item) => {
-      grandTotal += item.SubTotal
-    })
+      grandTotal += item.SubTotal;
+    });
      return grandTotal;
   }
   getbasketGrandTotal(): Observable<any> {
       return this.grandTotal.asObservable();
   }
-  calculateBasketGrandTotal(){
+  calculateBasketGrandTotal() {
     this.grandTotal.next(this.getCartGrandTotal());
   }
 
@@ -86,10 +88,10 @@ export class ProductService {
   calculateLocalCartProdCounts() {
     this.selectedProduct.next(this.getCartProducts().length);
   }
-  
-  //clearing basket
-  clearBasket(){
-    localStorage.removeItem("avct_item");
+
+  // clearing basket
+  clearBasket() {
+    localStorage.removeItem('avct_item');
     this.calculateLocalCartProdCounts();
   }
 
