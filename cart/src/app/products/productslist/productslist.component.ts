@@ -1,6 +1,8 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, Output } from '@angular/core';
 
 import { ProductService } from "./../../shared/services/Product.service";
+
+import { mapChildrenIntoArray } from '@angular/router/src/url_tree';
 
 @Injectable()
 @Component({
@@ -11,20 +13,26 @@ import { ProductService } from "./../../shared/services/Product.service";
 export class ProductslistComponent implements OnInit {
   private products:any;
   private productList:any;
-  private cartCount;
-  constructor(private productservice:ProductService) { }
+  private cartCount:number;
+  private cartProducts;
+  private currentProductQuantity = 0;
+
+  constructor(private productservice:ProductService) {}
 
   ngOnInit() {
     this.products = this.productservice.getProducts();
-    this.products.subscribe( product => {
-      this.productList = product;
+    this.products.subscribe( products => {
+      this.productList = products;
     })
   }
   addProductToCart(product){
-    console.log(product);
-    this.productservice.addToCart(product)
-    this.cartCount = this.productservice.calculateLocalCartProdCounts();
-    console.log(this.cartCount);
+    this.cartProducts = this.productservice.getCartProducts();
+    this.cartProducts.map(item => {
+      if(item.ProductId == product.ProductId){
+        this.currentProductQuantity = item.Quantity;
+      }
+    })
+    this.currentProductQuantity++
+    this.productservice.updateCart(product,this.currentProductQuantity)
   }
-
 }
