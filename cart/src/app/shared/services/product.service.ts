@@ -10,10 +10,9 @@ import { Product } from './../models/product';
 export class ProductService {
 
   public selectedProduct : BehaviorSubject<any> = new BehaviorSubject(this.getCartProducts().length);
+  public grandTotal : BehaviorSubject<any> = new BehaviorSubject(this.getCartGrandTotal());
   Products : Product[]= [];
-
-  private totalProducts:any;
-  private product:any;
+  private SingleProduct:any;
 
   constructor(private http:HttpClient) {
   }
@@ -41,12 +40,13 @@ export class ProductService {
     setTimeout(() => {
       localStorage.setItem("avct_item", JSON.stringify(a));
       this.calculateLocalCartProdCounts();
+      this.calculateBasketGrandTotal()
     }, 200);
   }
 
   // Removing product from cart
   removeCartProduct(product: Product) {
-    const products: Product[] = JSON.parse(localStorage.getItem("avct_item"));
+    const products: Products[] = JSON.parse(localStorage.getItem("avct_item"));
 
     for (let i = 0; i < products.length; i++) {
       if (products[i].ProductId === product.ProductId) {
@@ -57,20 +57,29 @@ export class ProductService {
     // ReAdding the products after remove
     localStorage.setItem("avct_item", JSON.stringify(products));
     this.calculateLocalCartProdCounts();
-    // this.calculateLocalCartProdCounts();
+    this.calculateBasketGrandTotal()
   }
 
   // Fetching Local CartsProducts
-  
-  getCartProducts(): Product[] {
-    let grandTotal = 0;
-    const products: Product[] =
+  getCartProducts(): Products[] {
+    const products: Products[] =
     JSON.parse(localStorage.getItem("avct_item")) || [];
-      products.map((item) => {
-        grandTotal += item.SubTotal
-      })
-      products.grandTotal = grandTotal;
     return products;
+  }
+
+  getCartGrandTotal(){
+    let grandTotal = 0;
+    let products = this.getCartProducts();
+    products.map((item) => {
+      grandTotal += item.SubTotal
+    })
+     return grandTotal;
+  }
+  getbasketGrandTotal(): Observable<any> {
+      return this.grandTotal.asObservable();
+  }
+  calculateBasketGrandTotal(){
+    this.grandTotal.next(this.getCartGrandTotal());
   }
 
   // updating basket count
