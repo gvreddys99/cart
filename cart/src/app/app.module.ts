@@ -8,17 +8,17 @@ import { HeaderComponent } from './header/header.component';
 import { ProductslistComponent } from './products/productslist/productslist.component';
 import { CartComponent } from './cart/cart.component';
 import { FooterComponent } from './footer/footer.component';
-import { ProductdetailsComponent } from './products/productdetails/productdetails.component';
 import { NoproductfoundComponent } from './shared/components/noproductfound/noproductfound.component';
 import { LoaderSpinnerComponent } from './shared/loader-spinner/loader-spinner.component';
 
 
 import { ProductService } from './shared/services/product.service';
+import { ThankyouComponent } from './thankyou/thankyou.component';
 
 const route: Route[] = [
-{path:'index.html', component:ProductslistComponent},
-{path:'product/:id',component:ProductdetailsComponent},
+{path:'', component:ProductslistComponent},
 {path:'cart',component:CartComponent},
+{path:'thankyou', component:ThankyouComponent},
 {path:'**',component:ProductslistComponent}
 ]
 
@@ -29,9 +29,9 @@ const route: Route[] = [
     ProductslistComponent,
     CartComponent,
     FooterComponent,
-    ProductdetailsComponent,
     NoproductfoundComponent,
-    LoaderSpinnerComponent
+    LoaderSpinnerComponent,
+    ThankyouComponent
   ],
   imports: [
     BrowserModule,

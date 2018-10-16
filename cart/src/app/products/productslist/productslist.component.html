@@ -7,7 +7,7 @@
       <figure class="card card-product">
         <div class="img-wrap"><img src="{{product.ProductPicUrl}}"></div>
         <figcaption class="info-wrap">
-            <h4 class="title"><a routerLink="/product/{{product.ProductId}}">{{product.Name}}</a></h4>
+            <h4 class="title">{{product.Name}}</h4>
             <p class="desc">{{product.Description | slice:0:50}}</p>
         </figcaption>
         <div class="bottom-wrap">
