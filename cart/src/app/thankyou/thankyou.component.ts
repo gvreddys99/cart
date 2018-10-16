@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProductService } from "./../shared/services/Product.service";
+import { ProductService } from './../shared/services/product.service';
 
 @Component({
   selector: 'app-thankyou',
@@ -9,11 +9,10 @@ import { ProductService } from "./../shared/services/Product.service";
 })
 export class ThankyouComponent implements OnInit {
 
-  constructor(private productService:ProductService) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit() {
     this.productService.clearBasket();
-    
   }
 
 }
