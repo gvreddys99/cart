@@ -46,7 +46,7 @@ export class ProductService {
 
   // Removing product from cart
   removeCartProduct(product: Product) {
-    const products: Products[] = JSON.parse(localStorage.getItem("avct_item"));
+    const products: Product[] = JSON.parse(localStorage.getItem("avct_item"));
 
     for (let i = 0; i < products.length; i++) {
       if (products[i].ProductId === product.ProductId) {
@@ -61,8 +61,8 @@ export class ProductService {
   }
 
   // Fetching Local CartsProducts
-  getCartProducts(): Products[] {
-    const products: Products[] =
+  getCartProducts(): Product[] {
+    const products: Product[] =
     JSON.parse(localStorage.getItem("avct_item")) || [];
     return products;
   }
