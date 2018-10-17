@@ -7,6 +7,9 @@ img.placeholder{
 .product-name{
     font-size:1.1rem;
 }
+.kart-container{
+    min-height:520px;
+}
 @media screen and (max-width: 600px) {
     table#cart tbody td .form-control{
 		width:20%;
